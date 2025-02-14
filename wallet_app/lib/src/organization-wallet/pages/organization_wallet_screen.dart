@@ -82,15 +82,19 @@ class OrganizationWalletScreen extends StatelessWidget {
             )
           ],
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.all(16),
           child: Row(
             spacing: 16,
             children: [
-              const Icon(
-                Icons.qr_code_rounded,
-                size: 24,
-                color: LightWalletTheme.primary,
+              IconButton(
+                onPressed: () => Navigator.pushNamed(
+                    context, WalletRoutes.qrRoute),
+                icon: const Icon(
+                  Icons.qr_code_rounded,
+                  size: 24,
+                  color: LightWalletTheme.primary,
+                ),
               ),
               const Icon(
                 Icons.settings_outlined,
