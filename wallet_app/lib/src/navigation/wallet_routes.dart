@@ -60,6 +60,8 @@ import '../feature/splash/splash_screen.dart';
 import '../feature/theme/theme_screen.dart';
 import '../feature/wallet/personalize/bloc/wallet_personalize_bloc.dart';
 import '../feature/wallet/personalize/wallet_personalize_screen.dart';
+import '../organization-wallet/pages/organization_wallet_screen.dart';
+import '../organization-wallet/pages/wallets_overview_screen.dart';
 import '../util/cast_util.dart';
 import 'secured_page_route.dart';
 
@@ -85,6 +87,10 @@ class WalletRoutes {
     changePinRoute,
     privacyPolicyRoute,
   ];
+
+  //organization wallet
+  static const organizationsOverviewRoute = '/organisations';
+  static const organizationWalletRoute = '/organisation';
 
   static const splashRoute = '/';
   static const introductionRoute = '/introduction';
@@ -123,7 +129,8 @@ class WalletRoutes {
     if (publicRoutes.contains(settings.name)) {
       return MaterialPageRoute(builder: builder, settings: settings);
     } else {
-      return SecuredPageRoute(builder: builder, settings: settings, transition: pageTransition);
+      return SecuredPageRoute(
+          builder: builder, settings: settings, transition: pageTransition);
     }
   }
 
@@ -140,6 +147,12 @@ class WalletRoutes {
 
   static WidgetBuilder _widgetBuilderFactory(RouteSettings settings) {
     switch (settings.name) {
+      //organization wallet
+      case WalletRoutes.organizationsOverviewRoute:
+        return _createOrganizationsOverviewScreenBuilder;
+      case WalletRoutes.organizationWalletRoute:
+        return _createOrganizationWalletScreenBuilder;
+
       case WalletRoutes.splashRoute:
         return _createSplashScreenBuilder;
       case WalletRoutes.qrRoute:
@@ -205,33 +218,52 @@ class WalletRoutes {
     }
   }
 
-  static List<Route<dynamic>> initialRoutes(String route) => [MaterialPageRoute(builder: _createSplashScreenBuilder)];
+  static List<Route<dynamic>> initialRoutes(String route) =>
+      [MaterialPageRoute(builder: _createSplashScreenBuilder)];
 }
 
-Widget _createSplashScreenBuilder(BuildContext context) => BlocProvider<SplashBloc>(
-      create: (BuildContext context) => SplashBloc(context.read(), context.read())..add(const InitSplashEvent()),
+//organization wallet
+Widget _createOrganizationsOverviewScreenBuilder(BuildContext context) =>
+    const OrganizationsOverview();
+
+Widget _createOrganizationWalletScreenBuilder(BuildContext context) =>
+    OrganizationWalletScreen();
+
+Widget _createSplashScreenBuilder(BuildContext context) =>
+    BlocProvider<SplashBloc>(
+      create: (BuildContext context) =>
+          SplashBloc(context.read(), context.read())
+            ..add(const InitSplashEvent()),
       child: const SplashScreen(),
     );
 
 Widget _createQrScreenBuilder(BuildContext context) => BlocProvider<QrBloc>(
-      create: (BuildContext context) => QrBloc(context.read(), context.read())..add(const QrScanCheckPermission()),
+      create: (BuildContext context) => QrBloc(context.read(), context.read())
+        ..add(const QrScanCheckPermission()),
       child: const QrScreen(),
     );
 
-Widget _createIntroductionScreenBuilder(BuildContext context) => const IntroductionScreen();
+Widget _createIntroductionScreenBuilder(BuildContext context) =>
+    const IntroductionScreen();
 
-Widget _createIntroductionPrivacyScreenBuilder(BuildContext context) => const IntroductionPrivacyScreen();
+Widget _createIntroductionPrivacyScreenBuilder(BuildContext context) =>
+    const IntroductionPrivacyScreen();
 
-Widget _createIntroductionConditionsScreenBuilder(BuildContext context) => const IntroductionConditionsScreen();
+Widget _createIntroductionConditionsScreenBuilder(BuildContext context) =>
+    const IntroductionConditionsScreen();
 
 Widget _createAboutScreenBuilder(BuildContext context) => const AboutScreen();
 
 Widget _createPinScreenBuilder(BuildContext context) => BlocProvider<PinBloc>(
-      create: (BuildContext context) => PinBloc(context.read<UnlockWalletWithPinUseCase>()),
-      child: PinScreen(onUnlock: () => Navigator.restorablePushReplacementNamed(context, WalletRoutes.dashboardRoute)),
+      create: (BuildContext context) =>
+          PinBloc(context.read<UnlockWalletWithPinUseCase>()),
+      child: PinScreen(
+          onUnlock: () => Navigator.restorablePushReplacementNamed(
+              context, WalletRoutes.dashboardRoute)),
     );
 
-Widget _createSetupSecurityScreenBuilder(BuildContext context) => BlocProvider<SetupSecurityBloc>(
+Widget _createSetupSecurityScreenBuilder(BuildContext context) =>
+    BlocProvider<SetupSecurityBloc>(
       create: (BuildContext context) => SetupSecurityBloc(
         context.read(),
         context.read(),
@@ -243,7 +275,8 @@ Widget _createSetupSecurityScreenBuilder(BuildContext context) => BlocProvider<S
     );
 
 WidgetBuilder _createDashboardScreenBuilder(RouteSettings settings) {
-  final DashboardScreenArgument? argument = DashboardScreen.getArgument(settings);
+  final DashboardScreenArgument? argument =
+      DashboardScreen.getArgument(settings);
   return (context) => BlocProvider(
         create: (context) => DashboardBloc(
           context.read(),
@@ -265,9 +298,11 @@ Widget _createMenuScreenBuilder(BuildContext context) {
 
 WidgetBuilder _createCardDetailScreenBuilder(RouteSettings settings) {
   return (context) {
-    final CardDetailScreenArgument argument = CardDetailScreen.getArgument(settings);
+    final CardDetailScreenArgument argument =
+        CardDetailScreen.getArgument(settings);
     return BlocProvider<CardDetailBloc>(
-      create: (context) => CardDetailBloc(context.read(), argument.card)..add(CardDetailLoadTriggered(argument.cardId)),
+      create: (context) => CardDetailBloc(context.read(), argument.card)
+        ..add(CardDetailLoadTriggered(argument.cardId)),
       child: CardDetailScreen(cardTitle: argument.cardTitle.l10nValue(context)),
     );
   };
@@ -275,9 +310,11 @@ WidgetBuilder _createCardDetailScreenBuilder(RouteSettings settings) {
 
 WidgetBuilder _createCardDataScreenBuilder(RouteSettings settings) {
   return (context) {
-    final CardDataScreenArgument argument = CardDataScreen.getArgument(settings);
+    final CardDataScreenArgument argument =
+        CardDataScreen.getArgument(settings);
     return BlocProvider<CardDataBloc>(
-      create: (context) => CardDataBloc(context.read())..add(CardDataLoadTriggered(argument.cardId)),
+      create: (context) => CardDataBloc(context.read())
+        ..add(CardDataLoadTriggered(argument.cardId)),
       child: CardDataScreen(cardTitle: argument.cardTitle),
     );
   };
@@ -287,7 +324,8 @@ WidgetBuilder _createCardHistoryScreenBuilder(RouteSettings settings) {
   return (context) {
     final String docType = CardHistoryScreen.getArguments(settings);
     return BlocProvider<CardHistoryBloc>(
-      create: (context) => CardHistoryBloc(context.read(), context.read())..add(CardHistoryLoadTriggered(docType)),
+      create: (context) => CardHistoryBloc(context.read(), context.read())
+        ..add(CardHistoryLoadTriggered(docType)),
       child: const CardHistoryScreen(),
     );
   };
@@ -326,7 +364,8 @@ WidgetBuilder _createPolicyScreenBuilder(RouteSettings settings) {
 
 WidgetBuilder _createIssuanceScreenBuilder(RouteSettings settings) {
   return (context) {
-    final IssuanceScreenArgument argument = IssuanceScreen.getArgument(settings);
+    final IssuanceScreenArgument argument =
+        IssuanceScreen.getArgument(settings);
     return BlocProvider<IssuanceBloc>(
       create: (BuildContext context) {
         return IssuanceBloc(
@@ -371,7 +410,8 @@ WidgetBuilder _createWalletPersonalizeScreenBuilder(RouteSettings settings) {
           context.read(),
           continueFromDigiD: argument.peek() != null,
         );
-        if (argument.peek() != null) bloc.add(WalletPersonalizeContinuePidIssuance(argument.value!));
+        if (argument.peek() != null)
+          bloc.add(WalletPersonalizeContinuePidIssuance(argument.value!));
         return bloc;
       },
       child: const WalletPersonalizeScreen(),
@@ -381,14 +421,16 @@ WidgetBuilder _createWalletPersonalizeScreenBuilder(RouteSettings settings) {
 
 Widget _createHistoryOverviewScreenBuilder(BuildContext context) {
   return BlocProvider<HistoryOverviewBloc>(
-    create: (BuildContext context) => HistoryOverviewBloc(context.read())..add(const HistoryOverviewLoadTriggered()),
+    create: (BuildContext context) => HistoryOverviewBloc(context.read())
+      ..add(const HistoryOverviewLoadTriggered()),
     child: const HistoryOverviewScreen(),
   );
 }
 
 WidgetBuilder _createHistoryDetailScreenBuilder(RouteSettings settings) {
   return (context) {
-    final HistoryDetailScreenArgument argument = HistoryDetailScreen.getArgument(settings);
+    final HistoryDetailScreenArgument argument =
+        HistoryDetailScreen.getArgument(settings);
     return BlocProvider<HistoryDetailBloc>(
       create: (BuildContext context) => HistoryDetailBloc(context.read())
         ..add(
@@ -401,15 +443,17 @@ WidgetBuilder _createHistoryDetailScreenBuilder(RouteSettings settings) {
 
 Widget _createChangeLanguageScreenBuilder(BuildContext context) {
   return BlocProvider<ChangeLanguageBloc>(
-    create: (BuildContext context) =>
-        ChangeLanguageBloc(context.read(), () => Localizations.localeOf(context))..add(ChangeLanguageLoadTriggered()),
+    create: (BuildContext context) => ChangeLanguageBloc(
+        context.read(), () => Localizations.localeOf(context))
+      ..add(ChangeLanguageLoadTriggered()),
     child: const ChangeLanguageScreen(),
   );
 }
 
 Widget _createChangePinScreenBuilder(BuildContext context) {
   return BlocProvider<ChangePinBloc>(
-    create: (BuildContext context) => ChangePinBloc(context.read(), context.read()),
+    create: (BuildContext context) =>
+        ChangePinBloc(context.read(), context.read()),
     child: const ChangePinScreen(),
   );
 }
@@ -432,20 +476,23 @@ WidgetBuilder _createLoginDetailScreenBuilder(RouteSettings settings) {
       organization: argument.organization,
       policy: argument.policy,
       requestedAttributes: argument.requestedAttributes,
-      sharedDataWithOrganizationBefore: argument.sharedDataWithOrganizationBefore,
+      sharedDataWithOrganizationBefore:
+          argument.sharedDataWithOrganizationBefore,
     );
   };
 }
 
 WidgetBuilder _createOrganizationDetailScreenBuilder(RouteSettings settings) {
   return (context) {
-    final OrganizationDetailScreenArgument argument = OrganizationDetailScreen.getArgument(settings);
+    final OrganizationDetailScreenArgument argument =
+        OrganizationDetailScreen.getArgument(settings);
     return BlocProvider<OrganizationDetailBloc>(
       create: (BuildContext context) => OrganizationDetailBloc()
         ..add(
           OrganizationProvided(
             organization: argument.organization,
-            sharedDataWithOrganizationBefore: argument.sharedDataWithOrganizationBefore,
+            sharedDataWithOrganizationBefore:
+                argument.sharedDataWithOrganizationBefore,
           ),
         ),
       child: const OrganizationDetailScreen(),
@@ -453,9 +500,11 @@ WidgetBuilder _createOrganizationDetailScreenBuilder(RouteSettings settings) {
   };
 }
 
-Widget _createSettingsScreenBuilder(BuildContext context) => const SettingsScreen();
+Widget _createSettingsScreenBuilder(BuildContext context) =>
+    const SettingsScreen();
 
-Widget _createBiometricsSettingsScreenBuilder(BuildContext context) => BlocProvider<BiometricSettingsBloc>(
+Widget _createBiometricsSettingsScreenBuilder(BuildContext context) =>
+    BlocProvider<BiometricSettingsBloc>(
       create: (BuildContext context) {
         return BiometricSettingsBloc(
           context.read(),
@@ -468,4 +517,5 @@ Widget _createBiometricsSettingsScreenBuilder(BuildContext context) => BlocProvi
       child: const BiometricSettingScreen(),
     );
 
-Widget _createPrivacyPolicyScreenBuilder(BuildContext context) => const PrivacyPolicyScreen();
+Widget _createPrivacyPolicyScreenBuilder(BuildContext context) =>
+    const PrivacyPolicyScreen();
