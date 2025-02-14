@@ -5,18 +5,23 @@ import '../../navigation/wallet_routes.dart';
 import '../../theme/light_wallet_theme.dart';
 import '../../wallet_assets.dart';
 import '../components/OrganisationWalletCard.dart';
+import '../data/MyOrganizationWallets.dart';
 import '../models/OrganizationWalletCardObj.dart';
 
 class OrganizationWalletScreen extends StatelessWidget {
-  OrganizationWalletScreen({Key? key}) : super(key: key);
+  final String id;
+  OrganizationWalletScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final walletData = MyOrganizationWallets.wallets
+        .firstWhere((wallet) => wallet['id'] == id);
+
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            _buildTopBar(context),
+            _buildTopBar(context, walletData['company_name']),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -60,7 +65,7 @@ class OrganizationWalletScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTopBar(BuildContext context) {
+  Widget _buildTopBar(BuildContext context, String walletName) {
     return Container(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,8 +81,8 @@ class OrganizationWalletScreen extends StatelessWidget {
                 color: LightWalletTheme.primary,
               ),
             ),
-            const Text(
-              'WebSloth',
+            Text(
+              walletName.toString(),
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             )
           ],
@@ -88,8 +93,8 @@ class OrganizationWalletScreen extends StatelessWidget {
             spacing: 16,
             children: [
               IconButton(
-                onPressed: () => Navigator.pushNamed(
-                    context, WalletRoutes.qrRoute),
+                onPressed: () =>
+                    Navigator.pushNamed(context, WalletRoutes.qrRoute),
                 icon: const Icon(
                   Icons.qr_code_rounded,
                   size: 24,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../navigation/wallet_routes.dart';
 import '../../theme/light_wallet_theme.dart';
-
+import '../data/MyOrganizationWallets.dart';
 
 class OrganizationsOverview extends StatelessWidget {
   const OrganizationsOverview({Key? key}) : super(key: key);
@@ -64,20 +64,16 @@ Widget _buildTopBar(BuildContext context) {
 
 Widget _renderOrganizations(BuildContext context) {
   return Container(
-    padding: const EdgeInsets.only(left: 16, right: 16, top: 26),
+    padding: EdgeInsets.only(left: 16, right: 16, top: 26),
     child: SingleChildScrollView(
       child: Column(
         spacing: 16,
-        children: [
-          OrganizationObject(
-            company: 'WebSloth',
-            role: 'Eigenaar',
-          ),
-          OrganizationObject(
-            company: 'Kamer van Koophandel',
-            role: 'Developer',
-          ),
-        ],
+        children: MyOrganizationWallets.wallets
+            .map((wallet) => OrganizationObject(
+                company: wallet['company_name'],
+                role: wallet['role'],
+                id: wallet['id']))
+            .toList(),
       ),
     ),
   );
@@ -90,7 +86,7 @@ Widget _buildBottomButton(BuildContext context) {
       onPressed: () {
         // Handle button press
       },
-      child: Row(
+      child: const Row(
         spacing: 12,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -105,9 +101,10 @@ Widget _buildBottomButton(BuildContext context) {
 class OrganizationObject extends StatelessWidget {
   final String company;
   final String role;
+  final String id;
 
   const OrganizationObject(
-      {Key? key, required this.company, required this.role})
+      {Key? key, required this.company, required this.role, required this.id})
       : super(key: key);
 
   @override
@@ -119,8 +116,11 @@ class OrganizationObject extends StatelessWidget {
         color: Color(0xFFFCFCFC),
       ),
       child: TextButton(
-        onPressed: () => Navigator.pushNamed(
-            context, WalletRoutes.organizationWalletRoute),
+        onPressed: () => Navigator.restorablePushNamed(
+          context,
+          WalletRoutes.organizationWalletRoute,
+          arguments: {'id': id},
+        ),
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(

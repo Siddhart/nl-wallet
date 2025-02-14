@@ -149,9 +149,9 @@ class WalletRoutes {
     switch (settings.name) {
       //organization wallet
       case WalletRoutes.organizationsOverviewRoute:
-        return _createOrganizationsOverviewScreenBuilder;
+        return (context) => _createOrganizationsOverviewScreenBuilder(context);
       case WalletRoutes.organizationWalletRoute:
-        return _createOrganizationWalletScreenBuilder;
+        return (context) => _createOrganizationWalletScreenBuilder(settings);
 
       case WalletRoutes.splashRoute:
         return _createSplashScreenBuilder;
@@ -226,8 +226,10 @@ class WalletRoutes {
 Widget _createOrganizationsOverviewScreenBuilder(BuildContext context) =>
     const OrganizationsOverview();
 
-Widget _createOrganizationWalletScreenBuilder(BuildContext context) =>
-    OrganizationWalletScreen();
+Widget _createOrganizationWalletScreenBuilder(RouteSettings settings) {
+  final args = settings.arguments as Map<String, dynamic>;
+  return OrganizationWalletScreen(id: args['id'].toString());
+}
 
 Widget _createSplashScreenBuilder(BuildContext context) =>
     BlocProvider<SplashBloc>(
