@@ -61,6 +61,8 @@ import '../feature/theme/theme_screen.dart';
 import '../feature/wallet/personalize/bloc/wallet_personalize_bloc.dart';
 import '../feature/wallet/personalize/wallet_personalize_screen.dart';
 import '../organization-wallet/pages/organization_wallet_screen.dart';
+import '../organization-wallet/pages/settings/organization_wallet_settings_screen.dart';
+import '../organization-wallet/pages/settings/team/organization_wallet_roles_screen.dart';
 import '../organization-wallet/pages/wallets_overview_screen.dart';
 import '../util/cast_util.dart';
 import 'secured_page_route.dart';
@@ -91,6 +93,8 @@ class WalletRoutes {
   //organization wallet
   static const organizationsOverviewRoute = '/organisations';
   static const organizationWalletRoute = '/organisation';
+  static const organizationWalletSettingsRoute = '/organisation/settings';
+  static const organizationWalletRolesRoute = '/organisation/settings/roles';
 
   static const splashRoute = '/';
   static const introductionRoute = '/introduction';
@@ -152,6 +156,10 @@ class WalletRoutes {
         return (context) => _createOrganizationsOverviewScreenBuilder(context);
       case WalletRoutes.organizationWalletRoute:
         return (context) => _createOrganizationWalletScreenBuilder(settings);
+      case WalletRoutes.organizationWalletSettingsRoute:
+        return (context) => _createOrganizationWalletSettingsScreenBuilder(settings);
+      case WalletRoutes.organizationWalletRolesRoute:
+        return (context) => _createOrganizationWalletRolesScreenBuilder(settings);
 
       case WalletRoutes.splashRoute:
         return _createSplashScreenBuilder;
@@ -229,6 +237,16 @@ Widget _createOrganizationsOverviewScreenBuilder(BuildContext context) =>
 Widget _createOrganizationWalletScreenBuilder(RouteSettings settings) {
   final args = settings.arguments as Map<String, dynamic>;
   return OrganizationWalletScreen(id: args['id'].toString());
+}
+
+Widget _createOrganizationWalletSettingsScreenBuilder(RouteSettings settings) {
+  final args = settings.arguments as Map<String, dynamic>;
+  return OrganizationWalletSettings(id: args['id'].toString());
+}
+
+Widget _createOrganizationWalletRolesScreenBuilder(RouteSettings settings) {
+  final args = settings.arguments as Map<String, dynamic>;
+  return OrganizationWalletRolesScreen(id: args['id'].toString());
 }
 
 Widget _createSplashScreenBuilder(BuildContext context) =>

@@ -101,10 +101,17 @@ class OrganizationWalletScreen extends StatelessWidget {
                   color: LightWalletTheme.primary,
                 ),
               ),
-              const Icon(
-                Icons.settings_outlined,
-                size: 24,
-                color: LightWalletTheme.primary,
+              IconButton(
+                onPressed: () => Navigator.restorablePushNamed(
+                  context,
+                  WalletRoutes.organizationWalletSettingsRoute,
+                  arguments: {'id': id},
+                ),
+                icon: const Icon(
+                  Icons.settings_outlined,
+                  size: 24,
+                  color: LightWalletTheme.primary,
+                ),
               ),
             ],
           ),
