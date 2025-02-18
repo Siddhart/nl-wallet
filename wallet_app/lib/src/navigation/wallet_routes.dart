@@ -60,8 +60,10 @@ import '../feature/splash/splash_screen.dart';
 import '../feature/theme/theme_screen.dart';
 import '../feature/wallet/personalize/bloc/wallet_personalize_bloc.dart';
 import '../feature/wallet/personalize/wallet_personalize_screen.dart';
+import '../organization-wallet/pages/card/organization_card_options.dart';
 import '../organization-wallet/pages/organization_wallet_screen.dart';
 import '../organization-wallet/pages/settings/organization_wallet_settings_screen.dart';
+import '../organization-wallet/pages/settings/team/organization_wallet_roles_people_screen.dart';
 import '../organization-wallet/pages/settings/team/organization_wallet_roles_screen.dart';
 import '../organization-wallet/pages/wallets_overview_screen.dart';
 import '../util/cast_util.dart';
@@ -95,6 +97,10 @@ class WalletRoutes {
   static const organizationWalletRoute = '/organisation';
   static const organizationWalletSettingsRoute = '/organisation/settings';
   static const organizationWalletRolesRoute = '/organisation/settings/roles';
+  static const organizationWalletRolesPeopleRoute =
+      '/organisation/settings/roles/people';
+  static const organizationCardOptionsRoute =
+      '/organisation/card/options';
 
   static const splashRoute = '/';
   static const introductionRoute = '/introduction';
@@ -157,9 +163,17 @@ class WalletRoutes {
       case WalletRoutes.organizationWalletRoute:
         return (context) => _createOrganizationWalletScreenBuilder(settings);
       case WalletRoutes.organizationWalletSettingsRoute:
-        return (context) => _createOrganizationWalletSettingsScreenBuilder(settings);
+        return (context) =>
+            _createOrganizationWalletSettingsScreenBuilder(settings);
       case WalletRoutes.organizationWalletRolesRoute:
-        return (context) => _createOrganizationWalletRolesScreenBuilder(settings);
+        return (context) =>
+            _createOrganizationWalletRolesScreenBuilder(settings);
+      case WalletRoutes.organizationWalletRolesPeopleRoute:
+        return (context) =>
+            _createOrganizationWalletRolesPeopleScreenBuilder(settings);
+      case WalletRoutes.organizationCardOptionsRoute:
+        return (context) =>
+            _createOrganizationCardOptionsScreenBuilder(settings);
 
       case WalletRoutes.splashRoute:
         return _createSplashScreenBuilder;
@@ -247,6 +261,19 @@ Widget _createOrganizationWalletSettingsScreenBuilder(RouteSettings settings) {
 Widget _createOrganizationWalletRolesScreenBuilder(RouteSettings settings) {
   final args = settings.arguments as Map<String, dynamic>;
   return OrganizationWalletRolesScreen(id: args['id'].toString());
+}
+
+Widget _createOrganizationWalletRolesPeopleScreenBuilder(
+    RouteSettings settings) {
+  final args = settings.arguments as Map<String, dynamic>;
+  return OrganizationWalletRolesPeopleScreen(id: args['id'].toString());
+}
+
+Widget _createOrganizationCardOptionsScreenBuilder(
+    RouteSettings settings) {
+  // final args = settings.arguments as Map<String, dynamic>;
+  // return OrganizationCardOptions(id: args['id'].toString());
+  return OrganizationCardOptions();
 }
 
 Widget _createSplashScreenBuilder(BuildContext context) =>

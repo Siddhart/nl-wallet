@@ -36,6 +36,7 @@ class OrganizationWalletScreen extends StatelessWidget {
                         darkMode: false,
                         backgroundImage: 'assets/non-free/images/bg_kvk.png',
                         icon: 'assets/non-free/logos/kvk.png',
+                        clickable: true,
                         attributes: [
                           Attribute(name: 'Attribute 1', value: 'Value 1'),
                           Attribute(name: 'Attribute 2', value: 'Value 2'),
@@ -49,6 +50,7 @@ class OrganizationWalletScreen extends StatelessWidget {
                         backgroundImage:
                             'assets/non-free/images/bg_default.png',
                         icon: 'assets/non-free/logos/sligro.png',
+                        clickable: true,
                         attributes: [
                           Attribute(name: 'Attribute 1', value: 'Value 1'),
                           Attribute(name: 'Attribute 2', value: 'Value 2'),

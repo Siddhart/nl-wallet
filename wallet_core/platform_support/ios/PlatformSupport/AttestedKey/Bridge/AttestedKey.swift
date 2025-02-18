@@ -18,7 +18,7 @@ extension AttestedKey: AttestedKeyBridge {
         .apple
     }
 
-    func generate() async throws(AttestedKeyError) -> String {
+    func generate() async throws -> String {  // ✅ Fixed syntax
         do {
             return try await Self.appAttest.generateKey()
         } catch let error as DCError {
@@ -28,10 +28,9 @@ extension AttestedKey: AttestedKeyBridge {
         }
     }
 
-    func attest(identifier: String, challenge: [UInt8]) async throws(AttestedKeyError) -> AttestationData {
+    func attest(identifier: String, challenge: [UInt8]) async throws -> AttestationData {  // ✅ Fixed syntax
         do {
             let attestation = try await Self.appAttest.attestKey(identifier, clientDataHash: Data(challenge))
-
             return .apple(attestationData: Array(attestation))
         } catch let error as DCError {
             throw AttestedKeyError.from(error)
@@ -40,9 +39,8 @@ extension AttestedKey: AttestedKeyBridge {
         }
     }
 
-    func sign(identifier: String, payload: [UInt8]) async throws(AttestedKeyError) -> [UInt8] {
+    func sign(identifier: String, payload: [UInt8]) async throws -> [UInt8] {  // ✅ Fixed syntax
         let clientDataHash = Data(SHA256.hash(data: Data(payload)))
-
         do {
             let assertion = try await Self.appAttest.generateAssertion(identifier, clientDataHash: clientDataHash)
             return Array(assertion)
@@ -53,15 +51,15 @@ extension AttestedKey: AttestedKeyBridge {
         }
     }
 
-    func publicKey(identifier _: String) throws(AttestedKeyError) -> [UInt8] {
+    func publicKey(identifier _: String) throws -> [UInt8] {  // ✅ Fixed syntax
         // Retrieving the public key is only supported as part of key attestation for iOS.
         // This method is only implemented for Android and should not be called on this platform.
-        throw .MethodUnimplemented
+        throw AttestedKeyError.MethodUnimplemented
     }
 
-    func delete(identifier _: String) throws(AttestedKeyError) {
+    func delete(identifier _: String) throws {  // ✅ Fixed syntax
         // Deleting an attested key is not supported by iOS.
         // This method is only implemented for Android and should not be called on this platform.
-        throw .MethodUnimplemented
+        throw AttestedKeyError.MethodUnimplemented
     }
 }
