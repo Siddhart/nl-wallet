@@ -24,9 +24,10 @@ DIGID_CONNECTOR_BASE_COMMIT="e6daa09f94efe434c62e9617bd768fd909174a41"
 
 # Set to `10.0.2.2` for android or to `localhost` for ios
 # export SERVICES_HOST=10.0.2.2
+# export SERVICES_HOST=localhost
 export SERVICES_HOST=localhost
 
-export WALLET_PROVIDER_PORT=3000
+export WALLET_PROVIDER_PORT=3010
 export PID_ISSUER_WS_PORT=3001
 export CONFIG_SERVER_PORT=3003
 export MOCK_RP_PORT=3004

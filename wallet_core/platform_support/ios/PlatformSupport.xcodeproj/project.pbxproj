@@ -23,8 +23,6 @@
 		61B7756029D724C20076A7F5 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B7755F29D724C20076A7F5 /* Utilities.swift */; };
 		61B7756329D725060076A7F5 /* PlatformUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B7756229D725060076A7F5 /* PlatformUtility.swift */; };
 		61C878A429E86E5A000AEC24 /* PlatformSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C878A329E86E5A000AEC24 /* PlatformSupport.swift */; };
-		61D577BA29A8FD7C00030578 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D577B929A8FD7C00030578 /* AppDelegate.swift */; };
-		61D577BE29A8FD7C00030578 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D577BD29A8FD7C00030578 /* ViewController.swift */; };
 		61D577CE29A92A8800030578 /* HWKeyStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D577CD29A92A8800030578 /* HWKeyStoreTests.swift */; };
 		61D972A129E068C200924F93 /* EncryptionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D972A029E068C200924F93 /* EncryptionKey.swift */; };
 /* End PBXBuildFile section */
@@ -54,13 +52,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 61F5335D29A8AB4100624E46;
 			remoteInfo = PlatformSupport;
-		};
-		61D577CB29A8FF3600030578 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 61F5335629A8AB4100624E46 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 61D577B629A8FD7C00030578;
-			remoteInfo = "Integration Tests Host App";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -97,7 +88,6 @@
 		61B7755F29D724C20076A7F5 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		61B7756229D725060076A7F5 /* PlatformUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformUtility.swift; sourceTree = "<group>"; };
 		61C878A329E86E5A000AEC24 /* PlatformSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSupport.swift; sourceTree = "<group>"; };
-		61D577B729A8FD7C00030578 /* Integration Tests Host App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Integration Tests Host App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		61D577B929A8FD7C00030578 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61D577BD29A8FD7C00030578 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		61D577C729A8FD7C00030578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,13 +105,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6133004629A8E350004D9CC7 /* libPlatformSupport.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		61D577B429A8FD7C00030578 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +271,6 @@
 			children = (
 				61F5335E29A8AB4100624E46 /* libPlatformSupport.a */,
 				6133004229A8E350004D9CC7 /* Integration Tests.xctest */,
-				61D577B729A8FD7C00030578 /* Integration Tests Host App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -323,29 +305,11 @@
 			);
 			dependencies = (
 				6133004829A8E350004D9CC7 /* PBXTargetDependency */,
-				61D577CC29A8FF3600030578 /* PBXTargetDependency */,
 			);
 			name = "Integration Tests";
 			productName = "Integration Tests";
 			productReference = 6133004229A8E350004D9CC7 /* Integration Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		61D577B629A8FD7C00030578 /* Integration Tests Host App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 61D577C829A8FD7C00030578 /* Build configuration list for PBXNativeTarget "Integration Tests Host App" */;
-			buildPhases = (
-				61D577B329A8FD7C00030578 /* Sources */,
-				61D577B429A8FD7C00030578 /* Frameworks */,
-				61D577B529A8FD7C00030578 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Integration Tests Host App";
-			productName = "Integration Tests Host App";
-			productReference = 61D577B729A8FD7C00030578 /* Integration Tests Host App.app */;
-			productType = "com.apple.product-type.application";
 		};
 		61F5335D29A8AB4100624E46 /* PlatformSupport */ = {
 			isa = PBXNativeTarget;
@@ -379,9 +343,6 @@
 						CreatedOnToolsVersion = 14.2;
 						TestTargetID = 61D577B629A8FD7C00030578;
 					};
-					61D577B629A8FD7C00030578 = {
-						CreatedOnToolsVersion = 14.2;
-					};
 					61F5335D29A8AB4100624E46 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -402,20 +363,12 @@
 			targets = (
 				61F5335D29A8AB4100624E46 /* PlatformSupport */,
 				6133004129A8E350004D9CC7 /* Integration Tests */,
-				61D577B629A8FD7C00030578 /* Integration Tests Host App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6133004029A8E350004D9CC7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		61D577B529A8FD7C00030578 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -459,15 +412,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		61D577B329A8FD7C00030578 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				61D577BE29A8FD7C00030578 /* ViewController.swift in Sources */,
-				61D577BA29A8FD7C00030578 /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		61F5335A29A8AB4100624E46 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -495,11 +439,6 @@
 			target = 61F5335D29A8AB4100624E46 /* PlatformSupport */;
 			targetProxy = 6133004729A8E350004D9CC7 /* PBXContainerItemProxy */;
 		};
-		61D577CC29A8FF3600030578 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 61D577B629A8FD7C00030578 /* Integration Tests Host App */;
-			targetProxy = 61D577CB29A8FF3600030578 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -510,18 +449,18 @@
 				CARGO_TARGETS = "";
 				"CARGO_TARGETS[sdk=iphoneos*]" = "aarch64-apple-ios";
 				"CARGO_TARGETS[sdk=iphonesimulator*]" = "aarch64-apple-ios-sim x86_64-apple-ios";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XGL6UKBPLP;
+				DEVELOPMENT_TEAM = MVYL475BTQ;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				"OTHER_LDFLAGS[sdk=iphoneos*]" = "$(PROJECT_DIR)/../../target/aarch64-apple-ios/debug/libplatform_support.a";
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=arm64]" = "$(PROJECT_DIR)/../../target/aarch64-apple-ios-sim/debug/libplatform_support.a";
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=x86_64]" = "$(PROJECT_DIR)/../../target/x86_64-apple-ios/debug/libplatform_support.a";
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.ictu.edi.wallet.integration-tests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.websloth.nlwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development nl.ictu.edi.wallet.integration-tests";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -541,18 +480,18 @@
 				CARGO_TARGETS = "";
 				"CARGO_TARGETS[sdk=iphoneos*]" = "aarch64-apple-ios";
 				"CARGO_TARGETS[sdk=iphonesimulator*]" = "aarch64-apple-ios-sim x86_64-apple-ios";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XGL6UKBPLP;
+				DEVELOPMENT_TEAM = MVYL475BTQ;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				"OTHER_LDFLAGS[sdk=iphoneos*]" = "$(PROJECT_DIR)/../../target/aarch64-apple-ios/release/libplatform_support.a";
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=arm64]" = "$(PROJECT_DIR)/../../target/aarch64-apple-ios-sim/release/libplatform_support.a";
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=x86_64]" = "$(PROJECT_DIR)/../../target/x86_64-apple-ios/release/libplatform_support.a";
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.ictu.edi.wallet.integration-tests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.websloth.nlwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development nl.ictu.edi.wallet.integration-tests";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -645,18 +584,18 @@
 				CARGO_TARGETS = "";
 				"CARGO_TARGETS[sdk=iphoneos*]" = "aarch64-apple-ios";
 				"CARGO_TARGETS[sdk=iphonesimulator*]" = "aarch64-apple-ios-sim x86_64-apple-ios";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XGL6UKBPLP;
+				DEVELOPMENT_TEAM = MVYL475BTQ;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				"OTHER_LDFLAGS[sdk=iphoneos*]" = "$(PROJECT_DIR)/../../target/aarch64-apple-ios/release/libplatform_support.a";
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=arm64]" = "$(PROJECT_DIR)/../../target/aarch64-apple-ios-sim/release/libplatform_support.a";
 				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=x86_64]" = "$(PROJECT_DIR)/../../target/x86_64-apple-ios/release/libplatform_support.a";
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.ictu.edi.wallet.integration-tests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.websloth.nlwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development nl.ictu.edi.wallet.integration-tests";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -668,96 +607,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Integration Tests Host App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Integration Tests Host App";
 			};
 			name = Profile;
-		};
-		617E460A2A2F7D2900F33256 /* Profile */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XGL6UKBPLP;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Integration Tests Host App/Info.plist";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.ictu.edi.wallet.integration-tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development nl.ictu.edi.wallet.integration-tests";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Profile;
-		};
-		61D577C929A8FD7C00030578 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XGL6UKBPLP;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Integration Tests Host App/Info.plist";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.ictu.edi.wallet.integration-tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development nl.ictu.edi.wallet.integration-tests";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		61D577CA29A8FD7C00030578 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = XGL6UKBPLP;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Integration Tests Host App/Info.plist";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "nl.ictu.edi.wallet.integration-tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development nl.ictu.edi.wallet.integration-tests";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
 		};
 		61F5336329A8AB4100624E46 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -921,16 +770,6 @@
 				6133004A29A8E350004D9CC7 /* Debug */,
 				6133004B29A8E350004D9CC7 /* Release */,
 				617E46092A2F7D2900F33256 /* Profile */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		61D577C829A8FD7C00030578 /* Build configuration list for PBXNativeTarget "Integration Tests Host App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				61D577C929A8FD7C00030578 /* Debug */,
-				61D577CA29A8FD7C00030578 /* Release */,
-				617E460A2A2F7D2900F33256 /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

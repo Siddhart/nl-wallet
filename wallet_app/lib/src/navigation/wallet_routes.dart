@@ -60,6 +60,8 @@ import '../feature/splash/splash_screen.dart';
 import '../feature/theme/theme_screen.dart';
 import '../feature/wallet/personalize/bloc/wallet_personalize_bloc.dart';
 import '../feature/wallet/personalize/wallet_personalize_screen.dart';
+import '../organization-wallet/pages/card/organization_card_activiteiten.dart';
+import '../organization-wallet/pages/card/info.dart';
 import '../organization-wallet/pages/card/organization_card_options.dart';
 import '../organization-wallet/pages/organization_wallet_screen.dart';
 import '../organization-wallet/pages/settings/organization_wallet_settings_screen.dart';
@@ -99,8 +101,9 @@ class WalletRoutes {
   static const organizationWalletRolesRoute = '/organisation/settings/roles';
   static const organizationWalletRolesPeopleRoute =
       '/organisation/settings/roles/people';
-  static const organizationCardOptionsRoute =
-      '/organisation/card/options';
+  static const organizationCardOptionsRoute = '/organisation/card/options';
+  static const organizationCardInfoRoute = '/organisation/card/info';
+  static const organizationCardActiviteitenRoute = '/organisation/card/activiteiten';
 
   static const splashRoute = '/';
   static const introductionRoute = '/introduction';
@@ -174,6 +177,12 @@ class WalletRoutes {
       case WalletRoutes.organizationCardOptionsRoute:
         return (context) =>
             _createOrganizationCardOptionsScreenBuilder(settings);
+      case WalletRoutes.organizationCardInfoRoute:
+        return (context) =>
+            _createOrganizationCardInfoScreenBuilder(settings);
+      case WalletRoutes.organizationCardActiviteitenRoute:
+        return (context) =>
+            _createOrganizationCardActiviteitenScreenBuilder(settings);
 
       case WalletRoutes.splashRoute:
         return _createSplashScreenBuilder;
@@ -271,9 +280,17 @@ Widget _createOrganizationWalletRolesPeopleScreenBuilder(
 
 Widget _createOrganizationCardOptionsScreenBuilder(
     RouteSettings settings) {
-  // final args = settings.arguments as Map<String, dynamic>;
-  // return OrganizationCardOptions(id: args['id'].toString());
   return OrganizationCardOptions();
+}
+
+Widget _createOrganizationCardInfoScreenBuilder(
+    RouteSettings settings) {
+  return OrganizationCardInfo();
+}
+
+Widget _createOrganizationCardActiviteitenScreenBuilder(
+    RouteSettings settings) {
+  return OrganizationCardActiviteiten();
 }
 
 Widget _createSplashScreenBuilder(BuildContext context) =>
