@@ -209,8 +209,8 @@ class WalletCoreMock extends _FlutterRustBridgeTasksMeta implements WalletCore {
   Stream<FlutterConfiguration> setConfigurationStream({hint}) {
     return Stream.value(
       FlutterConfiguration(
-        backgroundLockTimeout: Duration(seconds: 5).inSeconds,
-        inactiveLockTimeout: Duration(seconds: 60).inSeconds,
+        backgroundLockTimeout: Duration(seconds: 500).inSeconds, //5
+        inactiveLockTimeout: Duration(seconds: 600).inSeconds, //60
         version: 1,
       ),
     );

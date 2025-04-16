@@ -1,8 +1,8 @@
 {
   "version": 10,
   "lock_timeouts": {
-    "inactive_timeout": 300,
-    "background_timeout": 300
+    "inactive_timeout": 3000,
+    "background_timeout": 3000
   },
   "account_server": {
     "http_config": {
