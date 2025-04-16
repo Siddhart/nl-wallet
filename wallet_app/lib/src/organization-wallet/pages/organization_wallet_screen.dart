@@ -8,14 +8,40 @@ import '../components/OrganisationWalletCard.dart';
 import '../data/MyOrganizationWallets.dart';
 import '../models/OrganizationWalletCardObj.dart';
 
-class OrganizationWalletScreen extends StatelessWidget {
+class OrganizationWalletScreen extends StatefulWidget {
   final String id;
   OrganizationWalletScreen({Key? key, required this.id}) : super(key: key);
 
   @override
+  State<OrganizationWalletScreen> createState() => _OrganizationWalletScreenState();
+}
+
+class _OrganizationWalletScreenState extends State<OrganizationWalletScreen> {
+  Map<String, dynamic>? credentials;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCredentials();
+  }
+
+  Future<void> _loadCredentials() async {
+    try {
+      final walletData = MyOrganizationWallets.wallets
+          .firstWhere((wallet) => wallet['id'] == widget.id);
+      final data = await MyOrganizationWallets.getCredentials(walletData['wallet_id']);
+      setState(() {
+        credentials = data;
+      });
+    } catch (e) {
+      print('Error loading credentials: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final walletData = MyOrganizationWallets.wallets
-        .firstWhere((wallet) => wallet['id'] == id);
+        .firstWhere((wallet) => wallet['id'] == widget.id);
 
     return Scaffold(
       body: SafeArea(
@@ -107,7 +133,7 @@ class OrganizationWalletScreen extends StatelessWidget {
                 onPressed: () => Navigator.restorablePushNamed(
                   context,
                   WalletRoutes.organizationWalletSettingsRoute,
-                  arguments: {'id': id},
+                  arguments: {'id': widget.id},
                 ),
                 icon: const Icon(
                   Icons.settings_outlined,

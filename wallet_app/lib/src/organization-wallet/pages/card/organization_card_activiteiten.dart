@@ -21,20 +21,20 @@ class OrganizationCardActiviteiten extends StatelessWidget {
                   children: [
                     _DateHeader(date: 'Februari, 2025'),
                     _EventItem(
-                      imageUrl: 'https://www.meegeldersepoort.nl/wp-content/uploads/2018/02/log-belastingdienst.jpg',
+                      imageUrl: 'assets/non-free/logos/belastingdienst.png',
                       name: 'Belastingdienst',
                       eventType: 'Inloggen',
                       time: '12:07 door Siddhart Ghogli',
                     ),
                     _EventItem(
-                      imageUrl: 'https://www.meegeldersepoort.nl/wp-content/uploads/2018/02/log-belastingdienst.jpg',
+                      imageUrl: 'assets/non-free/logos/belastingdienst.png',
                       name: 'Belastingdienst',
                       eventType: 'Omzetbelasting',
                       time: '14:30 door Siddhart Ghogli',
                     ),
                     _DateHeader(date: 'Maart, 2025'),
                     _EventItem(
-                      imageUrl: 'https://www.destartversneller.nl/wp-content/uploads/2019/01/kvk-logo.jpg',
+                      imageUrl: 'assets/non-free/logos/kvk.png',
                       name: 'KVK Website',
                       eventType: 'Inloggen',
                       time: '10:15 door Siddhart Ghogli',
@@ -107,7 +107,7 @@ class _EventItem extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(4),
-              child: Image.network(
+              child: Image.asset(
                 imageUrl,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
@@ -117,23 +117,6 @@ class _EventItem extends StatelessWidget {
                       Icons.error_outline,
                       color: Colors.grey.shade600,
                       size: 24,
-                    ),
-                  );
-                },
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Container(
-                    color: Colors.grey.shade300,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null,
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.grey.shade600),
-                      ),
                     ),
                   );
                 },
