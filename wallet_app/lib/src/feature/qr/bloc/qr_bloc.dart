@@ -22,7 +22,8 @@ class QrBloc extends Bloc<QrEvent, QrState> {
   final DecodeQrUseCase _decodeQrUseCase;
   final CheckHasPermissionUseCase _checkHasPermissionUseCase;
 
-  QrBloc(this._decodeQrUseCase, this._checkHasPermissionUseCase) : super(QrScanInitial()) {
+  QrBloc(this._decodeQrUseCase, this._checkHasPermissionUseCase)
+      : super(QrScanInitial()) {
     on<QrScanCheckPermission>(_onCheckPermission);
     on<QrScanCodeDetected>(_onCodeDetected);
     on<QrScanReset>(_onReset);
@@ -38,9 +39,14 @@ class QrBloc extends Bloc<QrEvent, QrState> {
   }
 
   Future<void> _onCodeDetected(QrScanCodeDetected event, emit) async {
-    if (state is QrScanLoading || state is QrScanSuccess || state is QrScanFailure) {
+    if (state is QrScanLoading ||
+        state is QrScanSuccess ||
+        state is QrScanFailure) {
       return; //Already processing a QR code
     }
+    
+    Fimber.i('QR code scanned with raw value: ${event.code.rawValue}');
+
     emit(const QrScanLoading());
     unawaited(Vibration.vibrate());
     try {

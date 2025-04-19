@@ -64,6 +64,7 @@ import '../organization-wallet/pages/card/organization_card_activiteiten.dart';
 import '../organization-wallet/pages/card/info.dart';
 import '../organization-wallet/pages/card/organization_card_options.dart';
 import '../organization-wallet/pages/organization_wallet_screen.dart';
+import '../organization-wallet/pages/organization_qr_screen.dart';
 import '../organization-wallet/pages/settings/organization_wallet_settings_screen.dart';
 import '../organization-wallet/pages/settings/team/organization_wallet_roles_people_screen.dart';
 import '../organization-wallet/pages/settings/team/organization_wallet_roles_screen.dart';
@@ -132,6 +133,7 @@ class WalletRoutes {
   static const organizationDetailRoute = '/organization';
   static const settingsRoute = '/settings';
   static const qrRoute = '/qr';
+  static const organizationQrRoute = '/organization_qr';
   static const loginDetailRoute = '/login_detail';
   static const biometricsSettingsRoute = '/settings/biometrics';
   static const privacyPolicyRoute = '/privacy_policy';
@@ -188,6 +190,8 @@ class WalletRoutes {
         return _createSplashScreenBuilder;
       case WalletRoutes.qrRoute:
         return _createQrScreenBuilder;
+      case WalletRoutes.organizationQrRoute:
+        return _createOrganizationQrScreenBuilder;
       case WalletRoutes.introductionRoute:
         return _createIntroductionScreenBuilder;
       case WalletRoutes.introductionPrivacyRoute:
@@ -583,3 +587,8 @@ Widget _createBiometricsSettingsScreenBuilder(BuildContext context) =>
 
 Widget _createPrivacyPolicyScreenBuilder(BuildContext context) =>
     const PrivacyPolicyScreen();
+
+Widget _createOrganizationQrScreenBuilder(BuildContext context) {
+  final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+  return OrganizationQrScreen(organizationId: args?['id']?.toString() ?? '');
+}

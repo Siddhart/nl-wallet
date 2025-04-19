@@ -12,7 +12,7 @@ class OrganizationWalletRolesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final walletData = MyOrganizationWallets.wallets
+    final walletData = MyOrganizationWallets.getOrganizationWallets()
         .firstWhere((wallet) => wallet['id'] == id);
 
     return Scaffold(

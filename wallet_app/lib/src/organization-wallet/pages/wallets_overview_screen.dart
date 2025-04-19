@@ -68,7 +68,7 @@ Widget _renderOrganizations(BuildContext context) {
     child: SingleChildScrollView(
       child: Column(
         spacing: 16,
-        children: MyOrganizationWallets.wallets
+        children: MyOrganizationWallets.getOrganizationWallets()
             .map((wallet) => OrganizationObject(
                 company: wallet['company_name'],
                 role: wallet['role'],

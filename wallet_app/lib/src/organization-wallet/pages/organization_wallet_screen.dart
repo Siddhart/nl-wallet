@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../navigation/wallet_routes.dart';
 import '../../theme/light_wallet_theme.dart';
@@ -13,11 +14,13 @@ class OrganizationWalletScreen extends StatefulWidget {
   OrganizationWalletScreen({Key? key, required this.id}) : super(key: key);
 
   @override
-  State<OrganizationWalletScreen> createState() => _OrganizationWalletScreenState();
+  State<OrganizationWalletScreen> createState() =>
+      _OrganizationWalletScreenState();
 }
 
 class _OrganizationWalletScreenState extends State<OrganizationWalletScreen> {
   Map<String, dynamic>? credentials;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -27,20 +30,28 @@ class _OrganizationWalletScreenState extends State<OrganizationWalletScreen> {
 
   Future<void> _loadCredentials() async {
     try {
-      final walletData = MyOrganizationWallets.wallets
-          .firstWhere((wallet) => wallet['id'] == widget.id);
-      final data = await MyOrganizationWallets.getCredentials(walletData['wallet_id']);
       setState(() {
-        credentials = data;
+        isLoading = true;
+      });
+      final walletData = MyOrganizationWallets.getOrganizationWallets()
+          .firstWhere((wallet) => wallet['id'] == widget.id);
+      final data =
+          await MyOrganizationWallets.getCredentials(walletData['wallet_id']);
+      setState(() {
+        credentials = {'credentials': data};
+        isLoading = false;
       });
     } catch (e) {
       print('Error loading credentials: $e');
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final walletData = MyOrganizationWallets.wallets
+    final walletData = MyOrganizationWallets.getOrganizationWallets()
         .firstWhere((wallet) => wallet['id'] == widget.id);
 
     return Scaffold(
@@ -54,35 +65,23 @@ class _OrganizationWalletScreenState extends State<OrganizationWalletScreen> {
                   children: [
                     _buildQrLogo(context),
                     _buildActivities(context),
-                    _buildCards(context, [
-                      OrganizationWalletCardObj(
-                        id: '1',
-                        name: 'KVK Uitreksel',
-                        description: 'WebSloth',
-                        darkMode: false,
-                        backgroundImage: 'assets/non-free/images/bg_kvk.png',
-                        icon: 'assets/non-free/logos/kvk.png',
-                        clickable: true,
-                        attributes: [
-                          Attribute(name: 'Attribute 1', value: 'Value 1'),
-                          Attribute(name: 'Attribute 2', value: 'Value 2'),
-                        ],
-                      ),
-                      OrganizationWalletCardObj(
-                        id: '1',
-                        name: 'Sligro Klantenkaart',
-                        description: 'WebSloth',
-                        darkMode: true,
-                        backgroundImage:
-                            'assets/non-free/images/bg_default.png',
-                        icon: 'assets/non-free/logos/sligro.png',
-                        clickable: true,
-                        attributes: [
-                          Attribute(name: 'Attribute 1', value: 'Value 1'),
-                          Attribute(name: 'Attribute 2', value: 'Value 2'),
-                        ],
-                      ),
-                    ]),
+                    if (isLoading)
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    else if (credentials == null ||
+                        credentials!['credentials'] == null)
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text('No credentials available'),
+                        ),
+                      )
+                    else
+                      _buildCards(context, credentials!['credentials']),
                   ],
                 ),
               ),
@@ -121,8 +120,11 @@ class _OrganizationWalletScreenState extends State<OrganizationWalletScreen> {
             spacing: 16,
             children: [
               IconButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, WalletRoutes.qrRoute),
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  WalletRoutes.organizationQrRoute,
+                  arguments: {'id': widget.id},
+                ),
                 icon: const Icon(
                   Icons.qr_code_rounded,
                   size: 24,
@@ -149,7 +151,11 @@ class _OrganizationWalletScreenState extends State<OrganizationWalletScreen> {
   }
 
   Widget _buildQrLogo(BuildContext context) {
-    onTapQr() => Navigator.pushNamed(context, WalletRoutes.qrRoute);
+    onTapQr() => Navigator.pushNamed(
+          context,
+          WalletRoutes.organizationQrRoute,
+          arguments: {'id': widget.id},
+        );
     return Semantics(
       button: true,
       excludeSemantics: true,
@@ -230,8 +236,27 @@ class _OrganizationWalletScreenState extends State<OrganizationWalletScreen> {
     );
   }
 
-  Widget _buildCards(
-      BuildContext context, List<OrganizationWalletCardObj> cards) {
+  Widget _buildCards(BuildContext context, List<dynamic> credentials) {
+    final cards = credentials.map((credential) {
+      final parsedDoc = credential['parsedDocument'];
+      final credentialSubject = parsedDoc['credentialSubject'];
+      final issuer = parsedDoc['issuer'];
+      
+      // Format the issued date
+      final issuedDate = DateTime.parse(credential['addedOn']);
+      final formattedDate = DateFormat('dd-MM-yyyy').format(issuedDate);
+      
+      return OrganizationWalletCardObj(
+        id: credential['id'],
+        name: issuer['name'],
+        description: 'Toevegoed op $formattedDate',
+        darkMode: true,
+        backgroundImage: 'assets/non-free/images/bg_default.png',
+        icon: 'assets/non-free/logos/bank.png',
+        clickable: true,
+      );
+    }).toList();
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(

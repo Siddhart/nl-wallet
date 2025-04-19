@@ -8,7 +8,7 @@ class OrganizationWalletCardObj {
   final String icon;
   final bool darkMode;
   final bool clickable;
-  final List<Attribute> attributes;
+  final List<Attribute>? attributes;
 
   OrganizationWalletCardObj({
     required this.id,
@@ -18,7 +18,7 @@ class OrganizationWalletCardObj {
     required this.icon,
     required this.darkMode,
     required this.clickable,
-    required this.attributes,
+    this.attributes,
   });
 }
 
