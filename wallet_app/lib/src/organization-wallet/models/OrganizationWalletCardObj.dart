@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 class OrganizationWalletCardObj {
   final String id;
+  final Map<String, dynamic> organization;
   final String name;
   final String description;
   final String backgroundImage;
@@ -12,6 +13,7 @@ class OrganizationWalletCardObj {
 
   OrganizationWalletCardObj({
     required this.id,
+    required this.organization,
     required this.name,
     required this.description,
     required this.backgroundImage,

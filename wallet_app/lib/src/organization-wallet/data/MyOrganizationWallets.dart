@@ -46,14 +46,20 @@ class MyOrganizationWallets {
     }
   }
 
-  static Future<List<dynamic>> getCredentials(String walletId) async {
+  static Map<String, dynamic> getOrganizationWithId(String id) {
+    return getOrganizationWallets().firstWhere((wallet) => wallet['id'] == id);
+  }
+
+  static Future<List<dynamic>> getCredentialData(
+      String walletId, String cardId) async {
     final wallet =
         getOrganizationWallets().firstWhere((w) => w['wallet_id'] == walletId);
 
-    final token = await _authenticate(wallet['endpoint'],
-        wallet['email'], wallet['password']);
+    final token = await _authenticate(
+        wallet['endpoint'], wallet['email'], wallet['password']);
 
-    final url = wallet['endpoint'] + '/wallet-api/wallet/$walletId/credentials?showDeleted=false&showPending=false';
+    final url =
+        wallet['endpoint'] + '/wallet-api/wallet/$walletId/credentials/$cardId';
 
     final response = await http.get(
       Uri.parse(url),
@@ -62,7 +68,29 @@ class MyOrganizationWallets {
       },
     );
 
-    // print(response.body);
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load credential');
+    }
+  }
+
+  static Future<List<dynamic>> getCredentials(String walletId) async {
+    final wallet =
+        getOrganizationWallets().firstWhere((w) => w['wallet_id'] == walletId);
+
+    final token = await _authenticate(
+        wallet['endpoint'], wallet['email'], wallet['password']);
+
+    final url = wallet['endpoint'] +
+        '/wallet-api/wallet/$walletId/credentials?showDeleted=false&showPending=false';
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
 
     if (response.statusCode == 200) {
       return json.decode(response.body);

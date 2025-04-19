@@ -9,11 +9,18 @@ class OrganisationWalletCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
-      onTap: card.clickable ? () => Navigator.pushNamed(
-        context,
-        WalletRoutes.organizationCardOptionsRoute,
-      ) : null,
+      onTap: card.clickable
+          ? () => Navigator.pushNamed(
+                context,
+                WalletRoutes.organizationCardOptionsRoute,
+                arguments: {
+                  'organizationId': card.organization,
+                  'card': card
+                }
+              )
+          : null,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
@@ -57,31 +64,32 @@ class OrganisationWalletCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      if (card.clickable) Padding(
-                        padding: const EdgeInsets.only(top: 50),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Bekijk',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: card.darkMode
-                                    ? Color(0xFF152A62)
-                                    : Colors.white,
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.arrow_forward_rounded,
-                                  size: 24,
+                      if (card.clickable)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 50),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Bekijk',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                   color: card.darkMode
                                       ? Color(0xFF152A62)
-                                      : Colors.white),
-                              onPressed: () => print('object'),
-                            ),
-                          ],
+                                      : Colors.white,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Icon(Icons.arrow_forward_rounded,
+                                    size: 24,
+                                    color: card.darkMode
+                                        ? Color(0xFF152A62)
+                                        : Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                     ],
                   ),
                   Container(

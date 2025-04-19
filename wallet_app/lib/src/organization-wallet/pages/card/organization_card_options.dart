@@ -12,7 +12,12 @@ import '../../models/OrganizationWalletCardObj.dart';
 import '../settings/organization_wallet_settings_screen.dart';
 
 class OrganizationCardOptions extends StatelessWidget {
-  const OrganizationCardOptions({Key? key}) : super(key: key);
+  final Map<String, dynamic> organization;
+  final OrganizationWalletCardObj card;
+
+  const OrganizationCardOptions(
+      {Key? key, required this.organization, required this.card,})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,162 +39,160 @@ class OrganizationCardOptions extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _buildTopBar(BuildContext context) {
-  return Container(
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            IconButton(
-              onPressed: () => Navigator.pushNamed(
-                context,
-                WalletRoutes.organizationWalletRoute,
-                arguments: {'id': 1},
-              ),
-              icon: const Icon(
-                Icons.arrow_back_rounded,
-                size: 24,
-                color: LightWalletTheme.primary,
-              ),
-            ),
-            const Text(
-              'KVK Uitreksel',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: LightWalletTheme.primaryColorDark,
-                fontSize: 24,
-              ),
-            )
-          ],
-        ),
-        Padding(
-          padding: EdgeInsets.all(16),
-          child: Row(
-            spacing: 16,
+  Widget _buildTopBar(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
             children: [
               IconButton(
-                onPressed: () => Navigator.restorablePushNamed(
-                  context,
-                  WalletRoutes.organizationWalletSettingsRoute,
-                ),
+                onPressed: () => Navigator.pop(context),
                 icon: const Icon(
-                  Icons.help_outline_outlined,
+                  Icons.arrow_back_rounded,
                   size: 24,
                   color: LightWalletTheme.primary,
                 ),
               ),
+              Text(
+                card.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: LightWalletTheme.primaryColorDark,
+                  fontSize: 24,
+                ),
+              )
             ],
           ),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget _buildCard(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
-    child: OrganisationWalletCard(
-      card: OrganizationWalletCardObj(
-        id: '1',
-        name: 'KVK Uitreksel',
-        description: 'WebSloth',
-        darkMode: false,
-        backgroundImage: 'assets/non-free/images/bg_kvk.png',
-        clickable: false,
-        icon: 'assets/non-free/logos/kvk.png',
-        attributes: [
-          Attribute(name: 'Attribute 1', value: 'Value 1'),
-          Attribute(name: 'Attribute 2', value: 'Value 2'),
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Row(
+              spacing: 16,
+              children: [
+                IconButton(
+                  onPressed: () => Navigator.restorablePushNamed(
+                    context,
+                    WalletRoutes.organizationWalletSettingsRoute,
+                  ),
+                  icon: const Icon(
+                    Icons.help_outline_outlined,
+                    size: 24,
+                    color: LightWalletTheme.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget _buildOption(BuildContext context) {
-  List<OptionObj> options = [
-    const OptionObj(
-      icon: Icon(
-        Icons.groups_2_outlined,
-        size: 24,
-      ),
-      title: 'Gegevens in deze kaart',
-      description: 'Bekijk de gegevens in deze kaart',
-      route: WalletRoutes.organizationCardInfoRoute,
-    ),
-    const OptionObj(
-      icon: Icon(
-        Icons.history,
-        size: 24,
-      ),
-      title: 'Activiteiten',
-      description: 'Bekijk de activiteiten van deze kaart',
-      route: WalletRoutes.organizationCardActiviteitenRoute,
-    ),
-  ];
-
-  return Padding(
-    padding: const EdgeInsets.only(top: 16),
-    child: Container(
-      child: Column(
-        children: [
-          const Divider(height: 1),
-          ...options.map((option) => Column(
-            children: [
-              _buildOptionBar(context, option, {'id': '1'}),
-              const Divider(height: 1),
-            ],
-          )).toList(),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget _buildOptionBar(
-    BuildContext context, OptionObj option, Map<String, dynamic> walletData) {
-  if (option.route != null) {
+  Widget _buildCard(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
-      child: ListTile(
-        leading: option.icon,
-        title: Text(
-          option.title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
+      child: OrganisationWalletCard(
+        card: OrganizationWalletCardObj(
+          id: card.id,
+          organization: card.organization,
+          name: card.name,
+          description: card.description,
+          backgroundImage: card.backgroundImage,
+          icon: card.icon,
+          darkMode: card.darkMode,
+          clickable: false,
+          attributes: card.attributes,
         ),
-        subtitle: Text(option.description, style: const TextStyle(fontSize: 14)),
-        trailing: const Icon(
-          Icons.chevron_right,
+      ),
+    );
+  }
+
+  Widget _buildOption(BuildContext context) {
+    List<OptionObj> options = [
+      const OptionObj(
+        icon: Icon(
+          Icons.groups_2_outlined,
           size: 24,
         ),
-        onTap: () {
-          Navigator.restorablePushNamed(context, option.route!,
-              arguments: {'id': walletData["id"]});
-        },
+        title: 'Gegevens in deze kaart',
+        description: 'Bekijk de gegevens in deze kaart',
+        route: WalletRoutes.organizationCardInfoRoute,
       ),
-    );
-  } else {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
-      child: ListTile(
-        leading: option.icon,
-        title: Text(
-          option.title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+      const OptionObj(
+        icon: Icon(
+          Icons.history,
+          size: 24,
         ),
-        subtitle: Text(option.description, style: const TextStyle(fontSize: 14)),
+        title: 'Activiteiten',
+        description: 'Bekijk de activiteiten van deze kaart',
+        route: WalletRoutes.organizationCardActiviteitenRoute,
+      ),
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Container(
+        child: Column(
+          children: [
+            const Divider(height: 1),
+            ...options
+                .map((option) => Column(
+                      children: [
+                        _buildOptionBar(context, option, {'id': card.id}),
+                        const Divider(height: 1),
+                      ],
+                    ))
+                .toList(),
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _buildOptionBar(
+      BuildContext context, OptionObj option, Map<String, dynamic> walletData) {
+    if (option.route != null) {
+      return Padding(
+        padding: const EdgeInsets.all(8),
+        child: ListTile(
+          leading: option.icon,
+          title: Text(
+            option.title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle:
+              Text(option.description, style: const TextStyle(fontSize: 14)),
+          trailing: const Icon(
+            Icons.chevron_right,
+            size: 24,
+          ),
+          onTap: () {
+            Navigator.restorablePushNamed(context, option.route!,
+                arguments: {'id': walletData["id"]});
+          },
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.only(top: 8, bottom: 8),
+        child: ListTile(
+          leading: option.icon,
+          title: Text(
+            option.title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle:
+              Text(option.description, style: const TextStyle(fontSize: 14)),
+        ),
+      );
+    }
   }
 }
 

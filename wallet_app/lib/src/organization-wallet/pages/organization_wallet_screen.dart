@@ -246,8 +246,12 @@ class _OrganizationWalletScreenState extends State<OrganizationWalletScreen> {
       final issuedDate = DateTime.parse(credential['addedOn']);
       final formattedDate = DateFormat('dd-MM-yyyy').format(issuedDate);
       
+
+
+
       return OrganizationWalletCardObj(
         id: credential['id'],
+        organization: MyOrganizationWallets.getOrganizationWithId(widget.id),
         name: issuer['name'],
         description: 'Toevegoed op $formattedDate',
         darkMode: true,

@@ -73,10 +73,7 @@ Widget _buildTopBar(BuildContext context) {
     child: Row(
       children: [
         IconButton(
-          onPressed: () => Navigator.pushNamed(
-            context,
-            WalletRoutes.organizationCardOptionsRoute,
-          ),
+          onPressed: () => Navigator.pop(context),
           icon: const Icon(
             Icons.arrow_back_rounded,
             size: 24,

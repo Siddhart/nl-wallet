@@ -284,7 +284,12 @@ Widget _createOrganizationWalletRolesPeopleScreenBuilder(
 
 Widget _createOrganizationCardOptionsScreenBuilder(
     RouteSettings settings) {
-  return OrganizationCardOptions();
+  final args = settings.arguments as Map<String, dynamic>?;
+
+  return OrganizationCardOptions(
+    organization: args?['organizationId'],
+    card: args?['card'],
+  );
 }
 
 Widget _createOrganizationCardInfoScreenBuilder(
