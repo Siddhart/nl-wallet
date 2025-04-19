@@ -53,7 +53,6 @@ class _OrganizationCardInfoState extends State<OrganizationCardInfo> {
   @override
   Widget build(BuildContext context) {
 
-    print(cardData);
     return Scaffold(
       body: SafeArea(
         child: Column(
