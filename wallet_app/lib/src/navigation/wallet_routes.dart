@@ -60,6 +60,7 @@ import '../feature/splash/splash_screen.dart';
 import '../feature/theme/theme_screen.dart';
 import '../feature/wallet/personalize/bloc/wallet_personalize_bloc.dart';
 import '../feature/wallet/personalize/wallet_personalize_screen.dart';
+import '../organization-wallet/models/OrganizationWalletCardObj.dart';
 import '../organization-wallet/pages/card/organization_card_activiteiten.dart';
 import '../organization-wallet/pages/card/info.dart';
 import '../organization-wallet/pages/card/organization_card_options.dart';
@@ -294,7 +295,11 @@ Widget _createOrganizationCardOptionsScreenBuilder(
 
 Widget _createOrganizationCardInfoScreenBuilder(
     RouteSettings settings) {
-  return OrganizationCardInfo();
+  final args = settings.arguments as Map<String, dynamic>?;
+  return OrganizationCardInfo(
+    cardId: args?['cardId']?.toString() ?? '',
+    walletId: args?['walletId']?.toString() ?? '',
+  );
 }
 
 Widget _createOrganizationCardActiviteitenScreenBuilder(

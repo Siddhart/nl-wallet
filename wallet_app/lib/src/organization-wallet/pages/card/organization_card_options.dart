@@ -110,7 +110,7 @@ class OrganizationCardOptions extends StatelessWidget {
 
   Widget _buildOption(BuildContext context) {
     List<OptionObj> options = [
-      const OptionObj(
+       OptionObj(
         icon: Icon(
           Icons.groups_2_outlined,
           size: 24,
@@ -118,6 +118,17 @@ class OrganizationCardOptions extends StatelessWidget {
         title: 'Gegevens in deze kaart',
         description: 'Bekijk de gegevens in deze kaart',
         route: WalletRoutes.organizationCardInfoRoute,
+        card: OrganizationWalletCardObj(
+          id: card.id,
+          organization: card.organization,
+          name: card.name,
+          description: card.description,
+          backgroundImage: card.backgroundImage,
+          icon: card.icon,
+          darkMode: card.darkMode,
+          clickable: false,
+          attributes: card.attributes,
+        )
       ),
       const OptionObj(
         icon: Icon(
@@ -171,8 +182,12 @@ class OrganizationCardOptions extends StatelessWidget {
             size: 24,
           ),
           onTap: () {
+            final cardToPass = option.card ?? card;
             Navigator.restorablePushNamed(context, option.route!,
-                arguments: {'id': walletData["id"]});
+                arguments: {
+                  'cardId': cardToPass.id,
+                  'walletId': organization['wallet_id'],
+                });
           },
         ),
       );
@@ -201,11 +216,13 @@ class OptionObj {
   final String title;
   final String description;
   final String? route;
+  final OrganizationWalletCardObj? card;
 
   const OptionObj({
     required this.icon,
     required this.title,
     required this.description,
     this.route,
+    this.card
   });
 }

@@ -50,7 +50,7 @@ class MyOrganizationWallets {
     return getOrganizationWallets().firstWhere((wallet) => wallet['id'] == id);
   }
 
-  static Future<List<dynamic>> getCredentialData(
+  static Future<Map<String, dynamic>> getCredentialData(
       String walletId, String cardId) async {
     final wallet =
         getOrganizationWallets().firstWhere((w) => w['wallet_id'] == walletId);

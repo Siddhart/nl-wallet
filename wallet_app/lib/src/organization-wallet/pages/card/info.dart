@@ -3,25 +3,57 @@ import 'package:flutter/material.dart';
 import '../../../feature/common/widget/button/bottom_back_button.dart';
 import '../../../navigation/wallet_routes.dart';
 import '../../../theme/light_wallet_theme.dart';
-import '../../models/OrganizationWalletCardObj.dart';
+import '../../data/MyOrganizationWallets.dart';
 
-class OrganizationCardInfo extends StatelessWidget {
-  const OrganizationCardInfo({Key? key}) : super(key: key);
+class OrganizationCardInfo extends StatefulWidget {
+  final String cardId;
+  final String walletId;
+
+  const OrganizationCardInfo({
+    Key? key,
+    required this.cardId,
+    required this.walletId,
+  }) : super(key: key);
+
+  @override
+  State<OrganizationCardInfo> createState() => _OrganizationCardInfoState();
+}
+
+class _OrganizationCardInfoState extends State<OrganizationCardInfo> {
+  Map<String, dynamic>? cardData;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCardData();
+  }
+
+  Future<void> _loadCardData() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final Map<String, dynamic> data = await MyOrganizationWallets.getCredentialData(
+        widget.walletId,
+        widget.cardId,
+      );
+      setState(() {
+        cardData = data;
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Error loading card data: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Example attributes - in a real app these would come from the card object
-    final List<Attribute> attributes = [
-      Attribute(name: 'KvK nummer', value: '89595157'),
-      Attribute(name: 'Naam van de organisatie', value: 'WebSloth'),
-      Attribute(name: 'Handelsnamen', value: 'WebSloth'),
-      Attribute(name: 'Type eigenaar', value: 'NatuurlijkPersoon'),
-      Attribute(name: 'Rechtsvorm', value: 'Eenmanszaak'),
-      Attribute(name: 'Adres van de organisatie', value: 'Abraham Bloemaertstraat 65, 2526LN, ‘s-Gravenhage'),
-      Attribute(name: 'Emailadres van de organisatie', value: 'contact@siddhart.dev'),
-      Attribute(name: 'SBI activiteit', value: '6201, Ontwikkelen, produceren en uitgeven van software'),
-    ];
 
+    print(cardData);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -32,30 +64,22 @@ class OrganizationCardInfo extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ...attributes.map((attr) => Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            attr.name,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: LightWalletTheme.primaryColorDark,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            attr.value,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )).toList(),
+                    if (isLoading)
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    else if (cardData == null || cardData!['parsedDocument'] == null)
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text('No card data available'),
+                        ),
+                      )
+                    else
+                      _buildCardData(context),
                   ],
                 ),
               ),
@@ -65,6 +89,55 @@ class OrganizationCardInfo extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildCardData(BuildContext context) {
+    final credentialSubject = cardData!['parsedDocument']['credentialSubject'] as Map<String, dynamic>;
+    final List<Widget> attributeWidgets = [];
+
+    credentialSubject.forEach((key, value) {
+      if (key != 'id') {
+        attributeWidgets.add(
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _formatAttributeName(key),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: LightWalletTheme.primaryColorDark,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  value.toString(),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    });
+
+    return Column(children: attributeWidgets);
+  }
+
+  String _formatAttributeName(String key) {
+    // Only split when there's a lowercase followed by uppercase
+    final words = key.replaceAllMapped(
+      RegExp(r'([a-z])([A-Z])'),
+      (match) => '${match.group(1)} ${match.group(2)}',
+    );
+    return words.trim().split(' ').map((word) => 
+      word[0].toUpperCase() + word.substring(1).toLowerCase()
+    ).join(' ');
   }
 }
 
