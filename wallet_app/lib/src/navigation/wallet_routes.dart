@@ -72,6 +72,7 @@ import '../organization-wallet/pages/settings/team/organization_wallet_roles_scr
 import '../organization-wallet/pages/wallets_overview_screen.dart';
 import '../util/cast_util.dart';
 import 'secured_page_route.dart';
+import '../organization-wallet/pages/verify/verify_choose_wallet.dart';
 
 /// Class responsible for defining route names and for mapping these names to the actual
 /// instantiation logic, this includes providing any optional dependencies (e.g. BLoCs).
@@ -106,6 +107,7 @@ class WalletRoutes {
   static const organizationCardOptionsRoute = '/organisation/card/options';
   static const organizationCardInfoRoute = '/organisation/card/info';
   static const organizationCardActiviteitenRoute = '/organisation/card/activiteiten';
+  static const verifyChooseWalletRoute = '/organisation/verify/choose-wallet';
 
   static const splashRoute = '/';
   static const introductionRoute = '/introduction';
@@ -186,6 +188,8 @@ class WalletRoutes {
       case WalletRoutes.organizationCardActiviteitenRoute:
         return (context) =>
             _createOrganizationCardActiviteitenScreenBuilder(settings);
+      case WalletRoutes.verifyChooseWalletRoute:
+        return (context) => VerifyChooseWallet(qrCodeUrl: settings.arguments as String);
 
       case WalletRoutes.splashRoute:
         return _createSplashScreenBuilder;
