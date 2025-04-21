@@ -40,7 +40,7 @@ class VerifyOverview extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.all(24),
               child: Text(
-                'Wil je gegevens delen met De Belastingdienst?',
+                'Wil je gegevens delen met BusinessWallet.eu?',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class VerifyOverview extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Je staat op het punt gegevens van WebSloth te delen.',
+                    'Je staat op het punt gegevens van Persoonlijke Wallet te delen.',
                     style: TextStyle(
                       fontSize: 16,
                       color: Color(0xFF1E365B),
@@ -116,7 +116,7 @@ class VerifyOverview extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Alleen de volgende 2 gegevens worden gedeeld. Niets meer.',
+                    'Alleen de volgende 3 gegevens worden gedeeld. Niets meer.',
                     style: TextStyle(
                       fontSize: 16,
                       color: Color(0xFF1E365B),
@@ -138,23 +138,26 @@ class VerifyOverview extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '2 uit KVK Uitreksel',
+                              '3 uit Persoonsgegevens',
                               style: TextStyle(
                                 color: Color(0xFF152A62),
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Image.asset(
-                              'assets/non-free/logos/kvk.png',
-                              height: 24,
-                              width: 24,
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset(
+                                'assets/non-free/logos/rijksoverheid.png',
+                                height: 24,
+                                width: 24,
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 8),
                         Text(
-                          'KVK nummer\nSBI activiteit',
+                          'Voornaam\nAchternaam\nBSN Nummer',
                           style: TextStyle(
                             color: Color(0xFF152A62),
                             fontSize: 16,
@@ -191,7 +194,7 @@ class VerifyOverview extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'De Belastingdienst zal je gegevens 12 maanden bewaren en niet delen met andere partijen.',
+                    'BusinessWallet.eu zal je gegevens 12 maanden bewaren en niet delen met andere partijen.',
                     style: TextStyle(
                       fontSize: 16,
                       color: Color(0xFF1E365B),

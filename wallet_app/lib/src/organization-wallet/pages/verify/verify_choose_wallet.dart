@@ -115,12 +115,24 @@ class _VerifyChooseWalletState extends State<VerifyChooseWallet> {
                             );
                           }
                         : null,
-                    icon: const Icon(Icons.arrow_forward, color: Colors.white),
-                    label: const Text('Ga verder', style: TextStyle(color: Colors.white)),
+                    icon: Icon(
+                      Icons.arrow_forward,
+                      color: selectedWalletId != null ? Colors.white : const Color(0xFF0043CE),
+                    ),
+                    label: Text(
+                      'Ga verder',
+                      style: TextStyle(
+                        color: selectedWalletId != null ? Colors.white : const Color(0xFF0043CE),
+                      ),
+                    ),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.all(16),
-                      backgroundColor: const Color(0xFF0043CE),
+                      backgroundColor: selectedWalletId != null ? const Color(0xFF0043CE) : Colors.white,
                       disabledBackgroundColor: Colors.white,
+                      side: BorderSide(
+                        color: const Color(0xFF0043CE),
+                        width: selectedWalletId != null ? 0 : 1,
+                      ),
                     ),
                   ),
                 ),

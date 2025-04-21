@@ -33,7 +33,7 @@ class VerifyConfirmParty extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Image.asset(
-                'assets/non-free/logos/belastingdienst.png',
+                'assets/non-free/logos/business_wallet.png',
                 width: 80,
                 height: 80,
               ),
@@ -43,7 +43,7 @@ class VerifyConfirmParty extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.only(left: 24, right: 24),
             child: Text(
-              'Herken je De Belastingdienst?',
+              'Herken je BusinessWallet.eu',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -63,29 +63,7 @@ class VerifyConfirmParty extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.only(left: 24, right: 24),
-            child: RichText(
-              text: TextSpan(
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF1E365B),
-                ),
-                children: [
-                  const TextSpan(
-                      text: 'Ga alleen verder als het adres gelijk is aan '),
-                  TextSpan(
-                    text: 'mijn.belastingdienst.nl',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                  const TextSpan(text: '.'),
-                ],
-              ),
-            ),
-          ),
+         
           const SizedBox(height: 24),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
           Padding(

@@ -41,7 +41,7 @@ class VerifySuccess extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Je gegevens zijn gedeeld met De Belastingdienst. Sluit dit scherm en ga verder op de website van De Belastingdienst.',
+              'Je gegevens zijn successvol gedeeld! Sluit dit scherm en ga verder op de website van BusinessWallet.eu',
               style: TextStyle(
                 fontSize: 16,
                 color: Color(0xFF1E365B),
@@ -76,21 +76,6 @@ class VerifySuccess extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       backgroundColor: const Color(0xFF0043CE),
                       foregroundColor: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton.icon(
-                    onPressed: () {
-                      // TODO: Implement activity view
-                    },
-                    icon: const Icon(Icons.arrow_forward),
-                    label: const Text('Bekijk activiteit'),
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(16),
-                      foregroundColor: const Color(0xFF0043CE),
                     ),
                   ),
                 ),
