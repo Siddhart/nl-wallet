@@ -60,7 +60,7 @@ class OrganizationCardOptions extends StatelessWidget {
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: LightWalletTheme.primaryColorDark,
-                  fontSize: 24,
+                  fontSize: 18,
                 ),
               )
             ],

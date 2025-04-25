@@ -9,6 +9,7 @@ class OrganizationWalletCardObj {
   final String icon;
   final bool darkMode;
   final bool clickable;
+  final String? issuerImg; 
   final List<Attribute>? attributes;
 
   OrganizationWalletCardObj({
@@ -21,6 +22,7 @@ class OrganizationWalletCardObj {
     required this.darkMode,
     required this.clickable,
     this.attributes,
+    this.issuerImg
   });
 }
 

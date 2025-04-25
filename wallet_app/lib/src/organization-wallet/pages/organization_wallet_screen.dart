@@ -248,12 +248,12 @@ class _OrganizationWalletScreenState extends State<OrganizationWalletScreen> {
       
 
 
-
       return OrganizationWalletCardObj(
         id: credential['id'],
         organization: MyOrganizationWallets.getOrganizationWithId(widget.id),
-        name: issuer['name'],
-        description: 'Toevegoed op $formattedDate',
+        name: parsedDoc['type'][parsedDoc['type'].length - 1],
+        issuerImg: issuer['image'],
+        description: 'Toegevoegd op $formattedDate',
         darkMode: true,
         backgroundImage: 'assets/non-free/images/bg_default.png',
         icon: 'assets/non-free/logos/bank.png',

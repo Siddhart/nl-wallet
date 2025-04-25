@@ -9,7 +9,6 @@ class OrganisationWalletCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return InkWell(
       onTap: card.clickable
           ? () => Navigator.pushNamed(
@@ -48,7 +47,7 @@ class OrganisationWalletCard extends StatelessWidget {
                           Text(
                             card.name,
                             style: TextStyle(
-                                fontSize: 24,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: card.darkMode
                                     ? Color(0xFF152A62)
@@ -66,7 +65,7 @@ class OrganisationWalletCard extends StatelessWidget {
                       ),
                       if (card.clickable)
                         Padding(
-                          padding: const EdgeInsets.only(top: 50),
+                          padding: const EdgeInsets.only(top: 65),
                           child: Row(
                             children: [
                               Text(
@@ -93,11 +92,19 @@ class OrganisationWalletCard extends StatelessWidget {
                     ],
                   ),
                   Container(
+                    height: 32,
+                    width: 32,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Center(
-                      child: Image.asset(card.icon, fit: BoxFit.fill),
+                      image: card.issuerImg != null
+                          ? DecorationImage(
+                              image: NetworkImage(card.issuerImg!),
+                              fit: BoxFit.cover,
+                            )
+                          : DecorationImage(
+                              image: AssetImage(card.icon),
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 ],

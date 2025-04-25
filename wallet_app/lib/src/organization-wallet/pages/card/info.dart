@@ -112,7 +112,7 @@ class _OrganizationCardInfoState extends State<OrganizationCardInfo> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  value.toString(),
+                  value.toString() == "" ? "..." : value.toString(),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

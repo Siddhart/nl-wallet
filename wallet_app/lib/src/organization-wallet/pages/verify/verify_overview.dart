@@ -8,6 +8,7 @@ import '../../../feature/common/screen/confirm_with_pin_screen.dart';
 import '../../models/qr_code_data.dart';
 import 'response/verify_success.dart';
 import '../../../data/repository/card/wallet_card_repository.dart';
+import 'verify_choose_wallet.dart';
 
 class VerifyOverview extends StatelessWidget {
   final QrCodeData qrCodeData;
@@ -79,7 +80,12 @@ class VerifyOverview extends StatelessWidget {
                   const SizedBox(height: 16),
                   OutlinedButton.icon(
                     onPressed: () {
-                      // TODO: Navigate to wallet selection
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VerifyChooseWallet(qrCodeData: qrCodeData),
+                        ),
+                      );
                     },
                     icon: const Icon(Icons.swap_horiz),
                     label: const Text('Kies een andere wallet'),
@@ -217,7 +223,7 @@ class VerifyOverview extends StatelessWidget {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).popUntil((route) => route.isFirst);
                       },
                       icon: const Icon(Icons.block),
                       label: const Text('Stoppen'),
