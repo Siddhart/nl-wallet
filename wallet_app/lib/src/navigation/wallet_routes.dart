@@ -73,6 +73,7 @@ import '../organization-wallet/pages/wallets_overview_screen.dart';
 import '../util/cast_util.dart';
 import 'secured_page_route.dart';
 import '../organization-wallet/pages/verify/verify_choose_wallet.dart';
+import '../organization-wallet/models/qr_code_data.dart';
 
 /// Class responsible for defining route names and for mapping these names to the actual
 /// instantiation logic, this includes providing any optional dependencies (e.g. BLoCs).
@@ -189,7 +190,7 @@ class WalletRoutes {
         return (context) =>
             _createOrganizationCardActiviteitenScreenBuilder(settings);
       case WalletRoutes.verifyChooseWalletRoute:
-        return (context) => VerifyChooseWallet(qrCodeUrl: settings.arguments as String);
+        return (context) => VerifyChooseWallet(qrCodeData: settings.arguments as QrCodeData);
 
       case WalletRoutes.splashRoute:
         return _createSplashScreenBuilder;

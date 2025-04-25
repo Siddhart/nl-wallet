@@ -7,6 +7,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../../environment.dart';
 import '../../data/source/wallet_datasource.dart';
+import '../models/qr_code_data.dart';
 import '../../navigation/wallet_routes.dart';
 import '../../util/extension/build_context_extension.dart';
 import '../../util/extension/string_extension.dart';
@@ -101,18 +102,18 @@ class _OrganizationQrScreenState extends State<OrganizationQrScreen> with Widget
             try {
               final barcode = capture.barcodes.first;
 
-              final source = context.read<WalletDataSource>();
-              final cards = await source.readAll();
-
-              final attributes = cards.first.attributes;
               if (barcode.rawValue != null) {
+                // Parse the QR code data as JSON
+                final jsonData = json.decode(barcode.rawValue!);
+                final qrCodeData = QrCodeData.fromJson(jsonData);
+                
                 // Stop the camera before navigating
                 await cameraController.stop();
                 
                 await Navigator.pushNamed(
                   context,
                   WalletRoutes.verifyChooseWalletRoute,
-                  arguments: barcode.rawValue!, // Pass the QR code URL as an argument
+                  arguments: qrCodeData,
                 );
                 
                 // Restart camera after returning from the choose wallet screen
@@ -122,13 +123,15 @@ class _OrganizationQrScreenState extends State<OrganizationQrScreen> with Widget
               }
             } catch (e) {
               print('Error scanning QR code: $e');
-              // Optionally show an error message to the user
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Error scanning QR code: ${e.toString()}'),
-                  backgroundColor: Colors.red,
-                ),
-              );
+              // Show error message to the user
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Error scanning QR code: ${e.toString()}'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
             } finally {
               isProcessingQR = false;
             }

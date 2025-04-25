@@ -13,7 +13,7 @@ class MyOrganizationWallets {
         'email': 'siddhartssg@gmail.com',
         'password': 'Test123!',
         'endpoint': "https://wallet.businesswallet.eu",
-        'wallet_id': "0458d438-e62c-4dcf-9073-6e2b213196c7",
+        'wallet_id': "4c34fd06-d741-4981-be3a-99dca9de648f",
       },
       {
         'id': '2',
@@ -22,7 +22,7 @@ class MyOrganizationWallets {
         'email': 'siddhartssg@gmail.com',
         'password': 'Test123!',
         'endpoint': "https://wallet.businesswallet.eu",
-        'wallet_id': "0458d438-e62c-4dcf-9073-6e2b213196c7",
+        'wallet_id': "4c34fd06-d741-4981-be3a-99dca9de648f",
       }
     ];
   }

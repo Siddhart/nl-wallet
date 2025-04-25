@@ -5,12 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../../feature/common/screen/confirm_with_pin_screen.dart';
+import '../../models/qr_code_data.dart';
 import 'response/verify_success.dart';
 import '../../../data/repository/card/wallet_card_repository.dart';
 
 class VerifyOverview extends StatelessWidget {
-  final String qrCodeUrl;
-  const VerifyOverview({super.key, required this.qrCodeUrl});
+  final QrCodeData qrCodeData;
+  const VerifyOverview({super.key, required this.qrCodeData});
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +38,11 @@ class VerifyOverview extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(24),
+            Padding(
+              padding: const EdgeInsets.all(24),
               child: Text(
-                'Wil je gegevens delen met BusinessWallet.eu?',
-                style: TextStyle(
+                'Wil je gegevens delen met ${qrCodeData.pn}?',
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF1E365B),
@@ -68,23 +69,23 @@ class VerifyOverview extends StatelessWidget {
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Je staat op het punt gegevens van Persoonlijke Wallet te delen.',
                     style: TextStyle(
                       fontSize: 16,
                       color: Color(0xFF1E365B),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   OutlinedButton.icon(
                     onPressed: () {
                       // TODO: Navigate to wallet selection
                     },
-                    icon: Icon(Icons.swap_horiz),
-                    label: Text('Kies een andere wallet'),
+                    icon: const Icon(Icons.swap_horiz),
+                    label: const Text('Kies een andere wallet'),
                     style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.all(16),
-                      foregroundColor: Color(0xFF0043CE),
+                      padding: const EdgeInsets.all(16),
+                      foregroundColor: const Color(0xFF0043CE),
                     ),
                   ),
                 ],
@@ -94,12 +95,12 @@ class VerifyOverview extends StatelessWidget {
               padding: const EdgeInsets.only(top: 24),
               child: const Divider(height: 1, color: Color(0xFFE0E0E0)),
             ),
-            const _SectionCard(
+            _SectionCard(
               icon: Icons.info_outline,
               title: 'Reden',
               content: Text(
-                'Inloggen',
-                style: TextStyle(
+                qrCodeData.r,
+                style: const TextStyle(
                   fontSize: 16,
                   color: Color(0xFF1E365B),
                 ),
@@ -110,76 +111,71 @@ class VerifyOverview extends StatelessWidget {
               child: const Divider(height: 1, color: Color(0xFFE0E0E0)),
             ),
             _SectionCard(
-              icon: Icons.description_outlined,
-              title: 'Gevraagde gegevens',
+              icon: Icons.article_outlined,
+              title: 'Gegevens',
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Alleen de volgende 3 gegevens worden gedeeld. Niets meer.',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF1E365B),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Color(0xFFF1F5FF),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(height: 8),
+                  ...qrCodeData.ra.expand((block) => [
+                    SizedBox(
+                      width: double.infinity,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF5F7FA),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        child: Stack(
                           children: [
-                            Text(
-                              '3 uit Persoonsgegevens',
-                              style: TextStyle(
-                                color: Color(0xFF152A62),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  block.n,
+                                  style: const TextStyle(
+                                    color: Color(0xFF152A62),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                ...block.a.map((attr) => Text(
+                                  attr,
+                                  style: const TextStyle(
+                                    color: Color(0xFF152A62),
+                                    fontSize: 16,
+                                  ),
+                                )),
+                              ],
                             ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                'assets/non-free/logos/rijksoverheid.png',
-                                height: 24,
-                                width: 24,
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: Image.network(
+                                  block.i,
+                                  width: 40,
+                                  height: 40,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      width: 40,
+                                      height: 40,
+                                      color: Colors.grey[200],
+                                      child: const Icon(Icons.image_not_supported, size: 20),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 8),
-                        Text(
-                          'Voornaam\nAchternaam\nBSN Nummer',
-                          style: TextStyle(
-                            color: Color(0xFF152A62),
-                            fontSize: 16,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        TextButton.icon(
-                          onPressed: () {
-                            // TODO: Implement details view
-                          },
-                          icon: Text(
-                            'Bekijk',
-                            style: TextStyle(color: Color(0xFF152A62)),
-                          ),
-                          label: Icon(Icons.arrow_forward, color: Color(0xFF152A62)),
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 16),
+                  ]),
                 ],
               ),
             ),
@@ -194,19 +190,19 @@ class VerifyOverview extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'BusinessWallet.eu zal je gegevens 12 maanden bewaren en niet delen met andere partijen.',
-                    style: TextStyle(
+                    '${qrCodeData.pn} zal je gegevens 12 maanden bewaren en niet delen met andere partijen.',
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Color(0xFF1E365B),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextButton.icon(
                     onPressed: () {
                       // TODO: Implement terms view
                     },
-                    icon: Text('Lees de voorwaarden'),
-                    label: Icon(Icons.arrow_forward),
+                    icon: const Text('Lees de voorwaarden'),
+                    label: const Icon(Icons.arrow_forward),
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),
@@ -215,7 +211,7 @@ class VerifyOverview extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               child: Row(
                 children: [
                   Expanded(
@@ -223,29 +219,30 @@ class VerifyOverview extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      icon: Icon(Icons.block),
-                      label: Text('Stoppen'),
+                      icon: const Icon(Icons.block),
+                      label: const Text('Stoppen'),
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.all(16),
-                        side: BorderSide(color: Color(0xFF0043CE)),
-                        foregroundColor: Color(0xFF0043CE),
+                        padding: const EdgeInsets.all(16),
+                        side: const BorderSide(color: Color(0xFF0043CE)),
+                        foregroundColor: const Color(0xFF0043CE),
                       ),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: OutlinedButton.icon(
-                      onPressed: () async {
+                      onPressed: () {
                         ConfirmWithPinScreen.show(
                           context,
                           (String? returnUrl) async {
                             try {
-                              final repository = context.read<WalletCardRepository>();
+                              final repository =
+                                  context.read<WalletCardRepository>();
                               final cards = await repository.readAll();
                               final selectedCard = cards.first;
 
                               final response = await http.post(
-                                Uri.parse(qrCodeUrl),
+                                Uri.parse(qrCodeData.ep),
                                 headers: {
                                   'Content-Type': 'application/json',
                                   'Accept': 'application/json',
@@ -263,7 +260,8 @@ class VerifyOverview extends StatelessWidget {
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text('Error: ${response.statusCode}'),
+                                    content:
+                                        Text('Error: ${response.statusCode}'),
                                     backgroundColor: Colors.red,
                                   ),
                                 );
@@ -279,11 +277,13 @@ class VerifyOverview extends StatelessWidget {
                           },
                         );
                       },
-                      icon: Icon(Icons.arrow_forward, color: Colors.white),
-                      label: Text('Delen', style: TextStyle(color: Colors.white)),
+                      icon:
+                          const Icon(Icons.arrow_forward, color: Colors.white),
+                      label: const Text('Delen',
+                          style: TextStyle(color: Colors.white)),
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.all(16),
-                        backgroundColor: Color(0xFF0043CE),
+                        padding: const EdgeInsets.all(16),
+                        backgroundColor: const Color(0xFF0043CE),
                       ),
                     ),
                   ),
@@ -317,11 +317,11 @@ class _SectionCard extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
           child: Row(
             children: [
-              Icon(icon, color: Color(0xFF1E365B)),
-              SizedBox(width: 8),
+              Icon(icon, color: const Color(0xFF1E365B)),
+              const SizedBox(width: 8),
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF1E365B),

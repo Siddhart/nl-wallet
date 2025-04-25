@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../models/qr_code_data.dart';
 import 'verify_overview.dart';
 
 class VerifyConfirmParty extends StatelessWidget {
-  final String qrCodeUrl;
-  const VerifyConfirmParty({super.key, required this.qrCodeUrl});
+  final QrCodeData qrCodeData;
+  const VerifyConfirmParty({super.key, required this.qrCodeData});
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +33,26 @@ class VerifyConfirmParty extends StatelessWidget {
             padding: const EdgeInsets.only(left: 24, right: 24),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.asset(
-                'assets/non-free/logos/business_wallet.png',
+              child: Image.network(
+                qrCodeData.pi,
                 width: 80,
                 height: 80,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    'assets/non-free/logos/business_wallet.png',
+                    width: 80,
+                    height: 80,
+                  );
+                },
               ),
             ),
           ),
           const SizedBox(height: 24),
-          const Padding(
-            padding: EdgeInsets.only(left: 24, right: 24),
+          Padding(
+            padding: const EdgeInsets.only(left: 24, right: 24),
             child: Text(
-              'Herken je BusinessWallet.eu',
-              style: TextStyle(
+              'Herken je ${qrCodeData.pn}',
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF1E365B),
@@ -52,18 +60,17 @@ class VerifyConfirmParty extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Padding(
-            padding: EdgeInsets.only(left: 24, right: 24),
+          Padding(
+            padding: const EdgeInsets.only(left: 24, right: 24),
             child: Text(
-              'Pas op voor fraude. Controleer het webadres op de website waar je QR-code hebt gescand.',
-              style: TextStyle(
+              'Pas op voor fraude. Controleer het webadres op de website waar je QR-code hebt gescand',
+              style: const TextStyle(
                 fontSize: 16,
                 color: Color(0xFF1E365B),
               ),
             ),
           ),
           const SizedBox(height: 8),
-         
           const SizedBox(height: 24),
           const Divider(height: 1, color: Color(0xFFE0E0E0)),
           Padding(
@@ -108,7 +115,7 @@ class VerifyConfirmParty extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VerifyOverview(qrCodeUrl: qrCodeUrl),
+                          builder: (context) => VerifyOverview(qrCodeData: qrCodeData),
                         ),
                       );
                     },
